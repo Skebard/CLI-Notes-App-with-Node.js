@@ -23,6 +23,8 @@
 Add, remove and list notes from your console.
 
 - App in use
+
+
 ![Screenshot1](doc/usageExample.gif)
 <br>
 
