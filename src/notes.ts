@@ -4,8 +4,12 @@ const chalk = require('chalk');
 const fs = require('fs');
 const dateFormat = require('dateformat');
 
-//*Interfaces */
+//** Interfaces */
 import {Note} from './types';
+
+//** Messages */
+const error = chalk.bold.red.inverse;
+const success = chalk.green.bold.inverse;
 
 const addNote = function(title:any,body:any): void{
     //if we do not care about the type
@@ -20,9 +24,9 @@ const addNote = function(title:any,body:any): void{
             date: dateFormat(new Date(), "dddd, mmmm dS, yyyy, h:MM:ss TT"),
         });
         saveNotes(notes);
-        console.log('saved');
+        console.log(success('\nNote added successfully\n'));
     }else{
-        console.log('exists');
+        console.log(error('\nNote could not be added because the title already exists\n'));
     }
 
 }
@@ -30,10 +34,11 @@ const addNote = function(title:any,body:any): void{
 const removeNote = function(title:any): void{
     let notes: Note[] = loadNotes();
     let newNotes: Note[] = notes.filter(note=>note.title!==title);
-    if(notes.length < newNotes.length){
-        console.log('note removed');
+    if(notes.length > newNotes.length){
+        saveNotes(newNotes);
+        console.log(success('\nNote removed successfully \n'));
     }else{
-        console.log("note not found");
+        console.log(error('\nNote not found\n'));
     }
 }
 
@@ -54,9 +59,11 @@ const saveNotes = function(notes:object): void{
         console.log(dataSerialized);
         fs.writeFileSync(FILE_STORAGE,dataSerialized);
     }catch(e){
+        console.log(error('Error ocurred when writing file: '+e.message))
     }
 }
 
 module.exports = {
-    addNote:addNote
+    addNote:addNote,
+    removeNote:removeNote,
 }
