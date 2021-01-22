@@ -40,4 +40,19 @@ yargs.command({
         return notes.removeNote(title);
     }
 });
+yargs.command({
+    command: 'list',
+    describe: 'List all notes or the ones that match the given string',
+    builder: {
+        text: {
+            describe: 'Text to match in the title or body of the note',
+            demandOption: false,
+            type: 'string',
+        }
+    },
+    handler: function (_a) {
+        var text = _a.text;
+        return notes.listNotes(text);
+    }
+});
 yargs.parse();

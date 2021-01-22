@@ -11,7 +11,7 @@ import {Note} from './types';
 const error = chalk.bold.red.inverse;
 const success = chalk.green.bold.inverse;
 
-const addNote = function(title:any,body:any): void{
+const addNote = function(title:string,body:string): void{
     //if we do not care about the type
     //let notes: Array<any>= loadNotes();
     //interfaces
@@ -31,7 +31,7 @@ const addNote = function(title:any,body:any): void{
 
 }
 
-const removeNote = function(title:any): void{
+const removeNote = function(title:string): void{
     let notes: Note[] = loadNotes();
     let newNotes: Note[] = notes.filter(note=>note.title!==title);
     if(notes.length > newNotes.length){
@@ -40,6 +40,25 @@ const removeNote = function(title:any): void{
     }else{
         console.log(error('\nNote not found\n'));
     }
+}
+
+
+const listNotes = function(text:string=""){
+    const notes: Note[] = loadNotes();
+    let matchedNotes = notes.filter(note=>{
+        if(note.title.includes(text) || note.body.includes(text)){
+            return true;
+        }
+        return false;
+    });
+    if(matchedNotes.length>0){
+        console.log(matchedNotes);
+        console.log(success('\n'+matchedNotes.length+ ' note has been found :)'+'\n'));
+
+    }else{
+        console.log(error('\n 0 notes have been found :(\n'))
+    }
+
 }
 
 const loadNotes = function(): Note[]{
@@ -66,4 +85,5 @@ const saveNotes = function(notes:object): void{
 module.exports = {
     addNote:addNote,
     removeNote:removeNote,
+    listNotes:listNotes,
 }

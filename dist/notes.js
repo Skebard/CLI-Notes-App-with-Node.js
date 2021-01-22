@@ -38,6 +38,23 @@ var removeNote = function (title) {
         console.log(error('\nNote not found\n'));
     }
 };
+var listNotes = function (text) {
+    if (text === void 0) { text = ""; }
+    var notes = loadNotes();
+    var matchedNotes = notes.filter(function (note) {
+        if (note.title.includes(text) || note.body.includes(text)) {
+            return true;
+        }
+        return false;
+    });
+    if (matchedNotes.length > 0) {
+        console.log(success('\n' + matchedNotes.length + ' note has been found :)' + '\n'));
+        console.log(matchedNotes);
+    }
+    else {
+        console.log(error('\n 0 notes have been found :(\n'));
+    }
+};
 var loadNotes = function () {
     try {
         var dataBuffer = fs.readFileSync(FILE_STORAGE);
@@ -63,4 +80,5 @@ var saveNotes = function (notes) {
 module.exports = {
     addNote: addNote,
     removeNote: removeNote,
+    listNotes: listNotes,
 };
