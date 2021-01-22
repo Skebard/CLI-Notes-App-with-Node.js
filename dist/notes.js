@@ -13,8 +13,8 @@ var addNote = function (title, body) {
     //let notes: Array<any>= loadNotes();
     //interfaces
     var notes = loadNotes();
-    var duplicateNotes = notes.filter(function (note) { return note.title === title; });
-    if (duplicateNotes.length === 0) {
+    var duplicateNote = notes.find(function (note) { return note.title === title; });
+    if (!duplicateNote) {
         notes.push({
             title: title,
             body: body,
@@ -48,8 +48,8 @@ var listNotes = function (text) {
         return false;
     });
     if (matchedNotes.length > 0) {
-        console.log(success('\n' + matchedNotes.length + ' note has been found :)' + '\n'));
         console.log(matchedNotes);
+        console.log(success('\n' + matchedNotes.length + ' note has been found :)' + '\n'));
     }
     else {
         console.log(error('\n 0 notes have been found :(\n'));

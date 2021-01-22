@@ -11,13 +11,18 @@ import {Note} from './types';
 const error = chalk.bold.red.inverse;
 const success = chalk.green.bold.inverse;
 
+/**
+ * Saves a note in the FILE_STORAGE file
+ * @param title
+ * @param body
+ */
 const addNote = function(title:string,body:string): void{
     //if we do not care about the type
     //let notes: Array<any>= loadNotes();
     //interfaces
     let notes: Note[] = loadNotes();
-    const duplicateNotes = notes.filter(note=>note.title===title);
-    if(duplicateNotes.length === 0){
+    const duplicateNote = notes.find(note=>note.title===title);
+    if(!duplicateNote){
         notes.push({
             title:title,
             body:body,
